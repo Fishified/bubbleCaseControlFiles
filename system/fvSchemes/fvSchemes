@@ -1,0 +1,83 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  4.x                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ddtSchemes
+{
+    default         Euler;
+}
+
+gradSchemes
+{
+    default        Gauss linear; //cellLimited leastSquares; //Gauss linear;
+    //default leastSquares;
+    /*grad(U.air) Gauss linear;
+    grad(U.water) Gauss linear;
+    grad(p) Gauss linear;
+    grad(K.air) Gauss linear;
+    grad(e.air) Gauss linear;
+    grad(K.water) Gauss linear;
+    grad(e.water) Gauss linear;
+    curl(U.water) Gauss linear;
+    curl(U.air) Gauss linear;
+    grad(epsilonm) Gauss linear;
+    grad(epsilonm) Gauss linear;
+    grad((1-alpha.air)) Gauss linear;
+    grad(alpha.air) Gauss linear;
+    grad((alpha.air|max((alpha.air+alpha.water),(residualAlpha+residualAlpha)))) Gauss linear;
+    //grad(alpha) cellLimited Gauss 1;
+    grad(alpha) cellLimited leastSquares;*/
+}
+
+divSchemes
+{
+    default                         none;
+
+    div(phi,alpha.air)              Gauss vanLeer;
+    div(phir,alpha.air)             Gauss vanLeer;
+
+    "div\(alphaRhoPhi.*,U.*\)"      Gauss limitedLinearV 1;
+    "div\(phi.*,U.*\)"              Gauss limitedLinearV 1;
+
+    "div\(alphaRhoPhi.*,(h|e).*\)"  Gauss limitedLinear 1;
+    "div\(alphaRhoPhi.*,K.*\)"      Gauss limitedLinear 1;
+    "div\(alphaPhi.*,p\)"           Gauss limitedLinear 1;
+
+    "div\(alphaRhoPhi.*,(k|epsilon).*\)"  Gauss limitedLinear 1;
+    "div\(phim,(k|epsilon)m\)"      Gauss limitedLinear 1;
+
+    "div\(\(\(\(alpha.*\*thermo:rho.*\)\*nuEff.*\)\*dev2\(T\(grad\(U.*\)\)\)\)\)" Gauss linear;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear uncorrected;
+}
+
+interpolationSchemes
+{
+    default         linear;
+    //default         cellLimited;
+
+}
+
+snGradSchemes
+{
+    default         uncorrected;
+}
+
+
+// ************************************************************************* //
