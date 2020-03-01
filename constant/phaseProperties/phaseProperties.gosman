@@ -144,13 +144,11 @@ heatTransfer
 
 lift
 (
-
 	(air in water)
 	{
 		type constantCoefficient;
 		Cl 0.5;
 	}
-
 );
 
 wallLubrication

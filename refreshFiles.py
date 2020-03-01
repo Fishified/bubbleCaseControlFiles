@@ -1,0 +1,92 @@
+import os
+
+cwd=os.getcwd()
+path=r'../bubbleCaseControlFiles'
+
+if not os.path.isdir(path):
+    os.chdir("..")
+    os.system('git clone https://github.com/Fishified/bubbleCaseControlFiles.git')
+    os.chdir(cwd)
+
+with open('refreshDict', 'r') as file:
+    for line in file:  
+        key,value = line.strip().split(',')
+   
+        """system files"""
+        
+        if 'controlDict' in key:
+            file=path+'/system/controlDict/'+value.strip()
+            os.system('cp -r %s ./system/controlDict' % file)
+
+        if 'blockMeshDict' in key:
+            file=path+'/system/blockMeshDict/'+value.strip()
+            os.system('cp %s ./system/blockMeshDict' % file)
+
+        if 'snappy' in key:
+            file= path+'/system/snappyHexMeshDict/'+value.strip()
+            os.system('cp %s ./system/snappyHexMeshDict' % file )
+
+        if 'decompose' in key:
+            file= path+'/system/decomposeParDict/'+value.strip()
+            os.system('cp %s ./system/decomposeParDict' % file )
+
+        if 'setFields' in key:
+            file = path+'/system/setFieldsDict/'+value.strip()
+            os.system('cp %s ./system/setFieldsDict' % file )
+            
+        if 'fvSchemes' in key:
+            file = path+'/system/fvSchemes/'+value.strip()
+            os.system('cp %s ./system/fvSchemes' % file )            
+            
+        if 'fvSolution' in key:
+            file = path+'/system/fvSolution/'+value.strip()
+            os.system('cp %s ./system/fvSolution' % file )
+            
+        if 'createPatchDict' in key:
+            file = path+'/system/createPatchDict/'+value.strip()
+            os.system('cp %s ./system/createPatchDict' % file)
+           
+        if 'setSet' in key:
+            file = path+'/system/setSet/'+value.strip()
+            os.system('cp %s ./system/setSet' % file)  
+            
+        if 'surfaceFeatureExtractDict' in key:
+            file = path+'/system/surfaceFeatureExtractDict/'+value.strip()
+            os.system('cp %s ./system/surfaceFeatureExtractDict' % file) 
+
+
+        """constant files"""
+
+        if 'phaseProperties' in key:
+            file = path+'/constant/phaseProperties/'+value.strip()
+            os.system('cp %s ./constant/phaseProperties' % file)
+            
+        if 'thermophysicalProperties.air' in key:
+            file = path+'/constant/thermophysicalProperties/'+value.strip()
+            os.system('cp %s ./constant/thermophysicalProperties.air' % file)
+
+        if 'thermophysicalProperties.water' in key:
+            file = path+'/constant/thermophysicalProperties/'+value.strip()
+            os.system('cp %s ./constant/thermophysicalProperties.water' % file)
+
+        if 'turbulence.air' in key:
+            file = path+'/constant/turbulenceProperties/'+value.strip()
+            os.system('cp %s ./constant/turbulenceProperties.air' % file)
+        
+        if 'turbulence.water' in key:
+            file = path+'/constant/turbulenceProperties/'+value.strip()
+            os.system('cp %s ./constant/turbulenceProperties.water' % file)
+           
+        if 'g' in key:
+            file = path+'/constant/g/'+value.strip()
+            os.system('cp %s ./constant/g' % file)
+            
+            
+        """slurm file"""  
+
+        if 'slurm' in key:
+            file = path+'/slurm/'+value.strip()
+            os.system('cp %s ./%s' % (file,value.strip()))
+
+
+          
