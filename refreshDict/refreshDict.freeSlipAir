@@ -8,10 +8,11 @@ fvSolution, fvSolution
 createPatchDict, createPatchDict.diffuser
 setSet, setSet.diffuser
 surfaceFeatureExtract, surfaceFeatureExtract
-phaseProperties, phaseProperties.gosman
+phaseProperties, phaseProperties.base
 thermophysicalProperties.air, thermophysicalProperties.air
 thermophysicalProperties.water, thermophysicalProperties.water
 turbulence.air, kEmixture.air
 turbulence.water, kEmixture.water
 g, g
 slurm, freeSlip.sh
+0, 0.freeSlip
