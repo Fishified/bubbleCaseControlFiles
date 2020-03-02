@@ -1,0 +1,17 @@
+blockMeshDict, blockMeshDict
+controlDict, controlDict.cluster
+snappyHexMeshDict, snappyHexMeshDict
+decomposeParDict, decomposeParDict.8
+setFieldsDict, setFieldsDict
+fvSchemes, fvSchemes
+fvSolution, fvSolution
+createPatchDict, createPatchDict.diffuser
+setSet, setSet.diffuser
+surfaceFeatureExtract, surfaceFeatureExtract
+phaseProperties, phaseProperties.gosman
+thermophysicalProperties.air, thermophysicalProperties.air
+thermophysicalProperties.water, thermophysicalProperties.water
+turbulence.air, kEmixture.air
+turbulence.water, kEmixture.water
+g, g
+slurm, gosman.sh

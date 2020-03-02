@@ -1,17 +1,33 @@
 import os
+import argparse
 
 cwd=os.getcwd()
 path=r'../bubbleCaseControlFiles'
+
+parser = argparse.ArgumentParser(description='A class instance of argparse!')
+parser.add_argument("-file", help="path to refreshDict")
+args = parser.parse_args()
+refreshDict = args.file
+print(file)
+
+ 
 
 if not os.path.isdir(path):
     os.chdir("..")
     os.system('git clone https://github.com/Fishified/bubbleCaseControlFiles.git')
     os.chdir(cwd)
 
-with open('refreshDict', 'r') as file:
+
+with open(refreshDict, 'r') as file:
     for line in file:  
         key,value = line.strip().split(',')
-   
+
+        """0 folder"""
+
+        if "0" in key:
+            file=path+'/0/'+value.strip()
+            os.system('cp -r %s ./0' % file)           
+        
         """system files"""
         
         if 'controlDict' in key:
@@ -87,6 +103,3 @@ with open('refreshDict', 'r') as file:
         if 'slurm' in key:
             file = path+'/slurm/'+value.strip()
             os.system('cp %s ./%s' % (file,value.strip()))
-
-
-          

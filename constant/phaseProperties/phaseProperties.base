@@ -19,10 +19,10 @@ phases (air water);
 
 air
 {
-    diameterModel   constant; //accounts for isothermal expansion
+    diameterModel   constant; 
     constantCoeffs
     {
-        d              3.55e-3;//reference diameter for isothermal expansion
+        d              3.55e-3;
     }
     residualAlpha   1e-6;
 }
