@@ -24,7 +24,7 @@ boundaryField
     {
         type               fixedValue;
 		
-        value              uniform (0 0 0);//$internalField;
+        value              uniform (0 0 0);
     }
     outlet
     {

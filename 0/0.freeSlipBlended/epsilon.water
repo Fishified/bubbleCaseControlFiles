@@ -37,16 +37,15 @@ boundaryField
     wall
     {
         type            epsilonWallFunction;
+        lowReCorrection on;
         value           $internalField;
     }
+    
     plane
     {
         type            symmetryPlane;
     }
-    /*defaultFaces
-    {
-        type            empty;
-    }*/
+
 }
 
 // ************************************************************************* //

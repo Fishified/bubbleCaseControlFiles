@@ -36,17 +36,15 @@ boundaryField
 
     wall
     {
-        type            kLowReWallFunction;//kqRWallFunction;
+        type            kLowReWallFunction;
         value           $internalField;
     }
+
     plane
     {
         type            symmetryPlane;
     }
-    /*defaultFaces
-    {
-        type            empty;
-    }*/
+
 }
 
 // ************************************************************************* //

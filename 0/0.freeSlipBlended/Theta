@@ -44,11 +44,6 @@ boundaryField
     {
         type            symmetryPlane;
     }
-
-    /*defaultFaces
-    {
-        type            empty;
-    }*/
 }
 
 // ************************************************************************* //
