@@ -14,5 +14,5 @@ thermophysicalProperties.water, thermophysicalProperties.water
 turbulence.air, kEmixture.air
 turbulence.water, kEmixture.water
 g, g
-slurm, freeSlip.sh
+slurm, freeSlipBlended.sh
 0, 0.freeSlipBlended
