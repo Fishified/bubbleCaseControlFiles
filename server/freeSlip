@@ -1,0 +1,2 @@
+decomposePar
+mpirun -np 8 twoPhaseEulerFoam -parallel
