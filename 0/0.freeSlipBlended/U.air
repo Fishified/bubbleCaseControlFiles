@@ -34,7 +34,6 @@ boundaryField
     wall
     {
         type               slip;
-        value              uniform (0 0 0);
     }
 
     plane
