@@ -41,8 +41,6 @@ if 'mesh' in keyDict:
     if os.path.isdir(keyDict['mesh'].strip()):
         os.system('cp -r %s ./constant/polyMesh' % keyDict['mesh'].strip())
 
-
-
 with open(refreshDict, 'r') as file:
     for line in file:  
         key,value = line.strip().split(',')
@@ -52,6 +50,7 @@ with open(refreshDict, 'r') as file:
         if "0" in key:
             file=path+'/0/'+value.strip()
             os.system('cp -r %s ./0' % file)           
+        
         
         """system files"""
         
