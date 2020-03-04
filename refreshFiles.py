@@ -1,45 +1,45 @@
 import os
+import sys
 import argparse
 
 cwd=os.getcwd()
-path=r'../bubbleCaseControlFiles'
+# path=r'../bubbleCaseControlFiles'
 
 parser = argparse.ArgumentParser(description='A class instance of argparse!')
-parser.add_argument("-file", help="path to refreshDict")
+parser.add_argument("-n", help="Case's name. Assumes the case folder will reside at the same directory level as caseControlFiles repo.")
 args = parser.parse_args()
-refreshDict = args.file
-print(file)
+case = args.n
+refreshDict= './refreshDict/refreshDict.%s' %case
 
-if not os.path.isdir('./constant'):
+casePath='../%s' % case
+
+if not os.path.isdir(casePath):
+    print('Case folder for %s not present, creating an empty folder named case at  ...' %casePath)
+    os.system('mkdir %s' % casePath)
+
+if not os.path.isdir('%s/constant' %casePath):
     print('No constant folder present, creating it ...')
-    os.system('mkdir ./constant')
+    os.system('mkdir %s/constant' %casePath)
 
-if not os.path.isdir('./system'):
+if not os.path.isdir('%s/system' %casePath):
     print('No system folder present, creating it ...')
-    os.system('mkdir ./system')
-
-if not os.path.isdir(path):
-    os.chdir("..")
-    os.system('git clone https://github.com/Fishified/bubbleCaseControlFiles.git')
-    os.chdir(cwd)
+    os.system('mkdir %s/system' %casePath)
 
 with open(refreshDict, 'r') as file:
     keyDict={}
     for line in file:  
         key,value = line.strip().split(',')
         keyDict[key]=value
-    print(keyDict)
-    
 
 if 'mesh' in keyDict:
     print(keyDict['mesh'].strip())
     if not os.path.isdir(keyDict['mesh'].strip()):
-        print('The specified polyMesh folder %s is not found!' %keyDict['mesh'])
-        print('Either remove the mesh keyword or add the correct polyMesh folder to the mesh directory.' %keyDict['mesh'])
+        print('The specified polyMesh folder is not found!')
+        print('Either remove the mesh keyword or add the correct polyMesh folder to the mesh directory.')
         sys.exit("Missing polyMesh error")
 
     if os.path.isdir(keyDict['mesh'].strip()):
-        os.system('cp -r %s ./constant/polyMesh' % keyDict['mesh'].strip())
+        os.system('cp -r %s %s/constant/polyMesh' % (keyDict['mesh'].strip(),casePath))
 
 with open(refreshDict, 'r') as file:
     for line in file:  
@@ -48,82 +48,88 @@ with open(refreshDict, 'r') as file:
         """0 folder"""
 
         if "0" in key:
-            file=path+'/0/'+value.strip()
-            os.system('cp -r %s ./0' % file)           
-        
+            file='./0/'+value.strip()
+            os.system('cp -r %s %s/0' % (file,casePath))           
         
         """system files"""
         
         if 'controlDict' in key:
-            file=path+'/system/controlDict/'+value.strip()
-            os.system('cp -r %s ./system/controlDict' % file)
+            file='./system/controlDict/'+value.strip()
+            os.system('cp -r %s %s/system/controlDict' % (file,casePath))
 
         if 'blockMeshDict' in key:
-            file=path+'/system/blockMeshDict/'+value.strip()
-            os.system('cp %s ./system/blockMeshDict' % file)
+            file='./system/blockMeshDict/'+value.strip()
+            os.system('cp %s %s/system/blockMeshDict' % (file,casePath))
 
         if 'snappy' in key:
-            file= path+'/system/snappyHexMeshDict/'+value.strip()
-            os.system('cp %s ./system/snappyHexMeshDict' % file )
+            file= './system/snappyHexMeshDict/'+value.strip()
+            os.system('cp %s %s/system/snappyHexMeshDict' % (file,casePath) )
 
         if 'decompose' in key:
-            file= path+'/system/decomposeParDict/'+value.strip()
-            os.system('cp %s ./system/decomposeParDict' % file )
+            file= './system/decomposeParDict/'+value.strip()
+            os.system('cp %s %s/system/decomposeParDict' % (file,casePath) )
 
         if 'setFields' in key:
-            file = path+'/system/setFieldsDict/'+value.strip()
-            os.system('cp %s ./system/setFieldsDict' % file )
+            file = './system/setFieldsDict/'+value.strip()
+            os.system('cp %s %s/system/setFieldsDict' % (file,casePath) )
             
         if 'fvSchemes' in key:
-            file = path+'/system/fvSchemes/'+value.strip()
-            os.system('cp %s ./system/fvSchemes' % file )            
+            file = './system/fvSchemes/'+value.strip()
+            os.system('cp %s %s/system/fvSchemes' % (file,casePath) )            
             
         if 'fvSolution' in key:
-            file = path+'/system/fvSolution/'+value.strip()
-            os.system('cp %s ./system/fvSolution' % file )
+            file = './system/fvSolution/'+value.strip()
+            os.system('cp %s %s/system/fvSolution' % (file,casePath) )
             
         if 'createPatchDict' in key:
-            file = path+'/system/createPatchDict/'+value.strip()
-            os.system('cp %s ./system/createPatchDict' % file)
+            file = './system/createPatchDict/'+value.strip()
+            os.system('cp %s %s/system/createPatchDict' % (file,casePath))
            
         if 'setSet' in key:
-            file = path+'/system/setSet/'+value.strip()
-            os.system('cp %s ./system/setSet' % file)  
+            file = './system/setSet/'+value.strip()
+            os.system('cp %s %s/system/setSet' % (file,casePath))  
             
         if 'surfaceFeatureExtractDict' in key:
-            file = path+'/system/surfaceFeatureExtractDict/'+value.strip()
-            os.system('cp %s ./system/surfaceFeatureExtractDict' % file) 
+            file = './system/surfaceFeatureExtractDict/'+value.strip()
+            os.system('cp %s %s/system/surfaceFeatureExtractDict' % (file,casePath)) 
 
 
         """constant files"""
 
         if 'phaseProperties' in key:
-            file = path+'/constant/phaseProperties/'+value.strip()
-            os.system('cp %s ./constant/phaseProperties' % file)
+            file = './constant/phaseProperties/'+value.strip()
+            os.system('cp %s %s/constant/phaseProperties' % (file,casePath))
             
         if 'thermophysicalProperties.air' in key:
-            file = path+'/constant/thermophysicalProperties/'+value.strip()
-            os.system('cp %s ./constant/thermophysicalProperties.air' % file)
+            file = './constant/thermophysicalProperties/'+value.strip()
+            os.system('cp %s %s/constant/thermophysicalProperties.air' % (file,casePath))
 
         if 'thermophysicalProperties.water' in key:
-            file = path+'/constant/thermophysicalProperties/'+value.strip()
-            os.system('cp %s ./constant/thermophysicalProperties.water' % file)
+            file = './constant/thermophysicalProperties/'+value.strip()
+            os.system('cp %s %s/constant/thermophysicalProperties.water' % (file,casePath))
 
         if 'turbulence.air' in key:
-            file = path+'/constant/turbulenceProperties/'+value.strip()
-            os.system('cp %s ./constant/turbulenceProperties.air' % file)
+            file = './constant/turbulenceProperties/'+value.strip()
+            os.system('cp %s %s/constant/turbulenceProperties.air' % (file,casePath))
         
         if 'turbulence.water' in key:
-            file = path+'/constant/turbulenceProperties/'+value.strip()
-            os.system('cp %s ./constant/turbulenceProperties.water' % file)
+            file = './constant/turbulenceProperties/'+value.strip()
+            os.system('cp %s %s/constant/turbulenceProperties.water' % (file,casePath))
            
         if 'g' in key:
-            file = path+'/constant/g/'+value.strip()
-            os.system('cp %s ./constant/g' % file)
-            
+            file = './constant/g/'+value.strip()
+            os.system('cp %s %s/constant/g' % (file,casePath))
+
+
+        """script file"""
+
+        if 'script' in key:
+            file = './scripts/'+value.strip()
+            os.system('dos2unix %s' %file)
+            os.system('cp %s %s/%s' % (file,casePath,value.strip()))               
             
         """slurm file"""  
 
         if 'slurm' in key:
-            file = path+'/slurm/'+value.strip()
-            os.system('cp %s ./%s' % (file,value.strip()))
+            file = './slurm/'+value.strip()
+            os.system('cp %s %s/%s' % (file,casePath,value.strip()))

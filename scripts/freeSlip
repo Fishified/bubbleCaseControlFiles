@@ -1,0 +1,21 @@
+#!/bin/bash
+
+failfunction()
+{
+    if [ "$1" != 0 ]
+    then echo "One of the commands has failed!!"
+         mail -s "Task failed" | duguay.jason@gmail.com << "the task failed"
+         exit
+    fi
+}
+
+bob
+
+rm -r processor*
+failfunction "$?"
+
+decomposePar
+failfunction "$?"
+
+mpirun -np 8 twoPhaseEulerFoam -parallel
+failfunction "$?"
