@@ -14,7 +14,7 @@ thermophysicalProperties.water, thermophysicalProperties.water
 turbulence.air, kEmixture.air
 turbulence.water, kEmixture.water
 g, g
-slurm, freeSlip.sh
+slurm, slurmfreeSlip.sh
 0, 0.freeSlip
 mesh, ../mesh/polyMeshFirstSubmission
-script, freeSlip
+script, freeSlip.sh

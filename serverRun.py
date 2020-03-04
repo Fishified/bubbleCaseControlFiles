@@ -15,5 +15,5 @@ scriptPath = cwd+'/scripts/%s' %scriptName
 
 caseDirectory=os.path.dirname(cwd)+'/%s' %scriptName
 os.chdir(caseDirectory)
-launchCommand='./%s' %scriptName
-os.system(launchCommand) 
+launchCommand='bash %s.sh' %scriptName
+os.system(launchCommand)
