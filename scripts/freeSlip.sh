@@ -2,9 +2,12 @@
 
 failfunction()
 {
-    if [[ "$1" != 0 && "$2" == fatal ]];
-    then echo "One of the commands has failed!!"
-         mail -s "$3 failed" duguay.jason@gmail.com <<< "on job $4 "
+    if [ "$1" != 0 ];
+    then echo "$2 One of the commands has failed!!";
+        if [ "$3" == "fatal" ];
+        then echo "The failure was fatal!";
+         mail -s "$4 failed" duguay.jason@gmail.com <<< "on job $5 ";
+         fi
     fi
 }
 
