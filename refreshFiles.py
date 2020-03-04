@@ -10,12 +10,37 @@ args = parser.parse_args()
 refreshDict = args.file
 print(file)
 
- 
+if not os.path.isdir('./constant'):
+    print('No constant folder present, creating it ...')
+    os.system('mkdir ./constant')
+
+if not os.path.isdir('./system'):
+    print('No system folder present, creating it ...')
+    os.system('mkdir ./system')
 
 if not os.path.isdir(path):
     os.chdir("..")
     os.system('git clone https://github.com/Fishified/bubbleCaseControlFiles.git')
     os.chdir(cwd)
+
+with open(refreshDict, 'r') as file:
+    keyDict={}
+    for line in file:  
+        key,value = line.strip().split(',')
+        keyDict[key]=value
+    print(keyDict)
+    
+
+if 'mesh' in keyDict:
+    print(keyDict['mesh'].strip())
+    if not os.path.isdir(keyDict['mesh'].strip()):
+        print('The specified polyMesh folder %s is not found!' %keyDict['mesh'])
+        print('Either remove the mesh keyword or add the correct polyMesh folder to the mesh directory.' %keyDict['mesh'])
+        sys.exit("Missing polyMesh error")
+
+    if os.path.isdir(keyDict['mesh'].strip()):
+        os.system('cp -r %s ./constant/polyMesh' % keyDict['mesh'].strip())
+
 
 
 with open(refreshDict, 'r') as file:

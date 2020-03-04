@@ -16,3 +16,4 @@ turbulence.water, kEmixture.water
 g, g
 slurm, freeSlip.sh
 0, 0.freeSlip
+mesh, ../mesh/polyMeshFirstSubmission
