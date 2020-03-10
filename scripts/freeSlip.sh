@@ -7,9 +7,13 @@ failfunction()
         if [ "$3" == "fatal" ];
         then echo "The failure was fatal!";
          mail -s "$2 failed" duguay.jason@gmail.com <<< "on job $4 ";
+         exit
          fi
     fi
 }
+
+module load openfoam/5.0
+failfunction "$?" rm fatal freeSlip
 
 rm -r processor*
 failfunction "$?" rm pass freeSlip
