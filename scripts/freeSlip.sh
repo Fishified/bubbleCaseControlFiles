@@ -13,13 +13,16 @@ failfunction()
 }
 
 module load openfoam/5.0
-failfunction "$?" rm fatal freeSlip
+failfunction "$?" load fatal freeSlip
 
 rm -r processor*
 failfunction "$?" rm pass freeSlip
 
 decomposePar
 failfunction "$?" decomposePar fatal freeSlip
+
+sbatch slurmfreeSlip.sh
+failfunction "$?" sbatch fatal freeSlip
 
 #mpirun -np 80 twoPhaseEulerFoam -parallel
 #failfunction "$?" twoPhaseEulerFoam fatal freeSlip
