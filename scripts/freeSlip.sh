@@ -17,5 +17,5 @@ failfunction "$?" rm pass freeSlip
 decomposePar
 failfunction "$?" decomposePar fatal freeSlip
 
-mpirun -np 80 twoPhaseEulerFoam -parallel
-failfunction "$?" twoPhaseEulerFoam fatal freeSlip
+#mpirun -np 80 twoPhaseEulerFoam -parallel
+#failfunction "$?" twoPhaseEulerFoam fatal freeSlip
