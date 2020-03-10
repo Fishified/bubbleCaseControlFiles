@@ -1,7 +1,7 @@
 blockMeshDict, blockMeshDict
 controlDict, controlDict.cluster
 snappyHexMeshDict, snappyHexMeshDict
-decomposeParDict, decomposeParDict.8
+decomposeParDict, decomposeParDict.80
 setFieldsDict, setFieldsDict
 fvSchemes, fvSchemes
 fvSolution, fvSolution
@@ -18,3 +18,4 @@ slurm, slurmfreeSlip.sh
 0, 0.freeSlip
 mesh, ../mesh/polyMeshFirstSubmission
 script, freeSlip.sh
+localTest, localTest.sh

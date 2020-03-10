@@ -14,8 +14,8 @@ failfunction()
 rm -r processor*
 failfunction "$?" rm pass freeSlip
 
-decomosePar
+decomposePar
 failfunction "$?" decomposePar fatal freeSlip
 
-mpirun -np 8 twoPhaseEulerFoam -parallel
+mpirun -np 80 twoPhaseEulerFoam -parallel
 failfunction "$?" twoPhaseEulerFoam fatal freeSlip
