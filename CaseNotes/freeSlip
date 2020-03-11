@@ -1,0 +1,1 @@
+Changed boundary to freeSlip for air phase. It did not change either the flux value or the vertical velocity profiles near the bed.

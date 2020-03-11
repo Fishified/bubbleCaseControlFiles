@@ -1,0 +1,172 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  4.x                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      phaseProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+phases (air water);
+
+air
+{
+    diameterModel   constant; 
+    constantCoeffs
+    {
+        d              3.55e-3;
+    }
+    residualAlpha   1e-6;
+}
+
+water
+{
+    diameterModel   constant;
+    constantCoeffs
+    {
+        d               1e-4;
+    }
+    residualAlpha   1e-6;
+}
+
+blending
+{
+    default
+    {
+        type                       linear; 
+        maxFullyDispersedAlpha.air    0.3; //Max alpha.air fully dispersed
+        maxPartlyDispersedAlpha.air   0.5; //Max alpha.air partially dispersed
+        maxFullyDispersedAlpha.water  0.3; //Max alpha.air fully dispersed
+        maxPartlyDispersedAlpha.water 0.5; //Max alpha.air partially dispersed
+    }
+}
+
+sigma
+(
+    (air and water)     0.0728
+);
+
+/*
+Definition for aspect ratio models to use. Here we assume a constant aspect
+ratio (E0) of 1, or a perfect sphere.  
+*/
+
+aspectRatio
+(
+    (air in water)
+    {
+        type            constant;
+        E0              1.0;
+    }
+
+    (water in air)
+    {
+        type            constant;
+        E0              1.0;
+    }
+);
+
+drag
+(
+    (air in water)
+    {
+        type            IshiiZuber; //SchillerNaumann;
+        residualRe      1e-3;
+        swarmCorrection             //corrects for swarm effects of dense rising bubble swarms
+        {
+            type        Tomiyama;//none;
+            l               1.75;
+        }
+    }
+
+    (water in air)
+    {
+        type            IshiiZuber; //SchillerNaumann;
+        residualRe      1e-3;
+        swarmCorrection
+        {
+            type        none;
+        }
+    }
+
+    (air and water)
+    {
+        type            segregated;
+        m               0.5;
+        n               8;
+        swarmCorrection
+        {
+            type        none;
+        }
+    }
+);
+
+
+virtualMass
+(
+    (air in water)
+    {
+        type            constantCoefficient;
+        Cvm             0.5;
+    }
+
+    (water in air)
+    {
+        type            constantCoefficient;
+        Cvm             0.5;
+    }
+);
+
+
+heatTransfer
+(
+    (air in water)
+    {
+        type            RanzMarshall;
+        residualAlpha   1e-4;
+    }
+
+    (water in air)
+    {
+        type            RanzMarshall;
+        residualAlpha   1e-4;
+    }
+);
+
+
+lift
+(
+
+	(air in water)
+	{
+		type constantCoefficient;
+		Cl 0.5;
+	}
+
+);
+
+wallLubrication
+(
+);
+
+turbulentDispersion
+(
+	(air in water)
+	{
+        
+        type            Gosman;
+        sigma             1;
+	}
+);
+
+pMin            10000;
+
+// ************************************************************************* //
