@@ -1,7 +1,7 @@
 blockMeshDict, blockMeshDict
 controlDict, controlDict.cluster
 snappyHexMeshDict, snappyHexMeshDict
-decomposeParDict, decomposeParDict.80
+decomposeParDict, decomposeParDict.192
 setFieldsDict, setFieldsDict
 fvSchemes, fvSchemes
 fvSolution, fvSolution
