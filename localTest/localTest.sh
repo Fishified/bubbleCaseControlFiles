@@ -24,10 +24,10 @@ echo "Running the local tests on the case"
 now=$(date)
 echo "Test started at $now:" >> testResult;
 rm -r processor*
-failfunction "$?" rm pass freeSlip
+failfunction "$?" rm pass test
 
 decomposePar -dict ./localTest/decomposeParDict
-failfunction "$?" decomposePar fatal freeSlip
+failfunction "$?" decomposePar fatal test
 
 mpirun -np 8 twoPhaseEulerFoam -parallel
-failfunction "$?" twoPhaseEulerFoam fatal freeSlip
+failfunction "$?" twoPhaseEulerFoam fatal test
