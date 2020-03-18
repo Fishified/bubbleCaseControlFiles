@@ -14,14 +14,16 @@ failfunction()
 
 echo "Loading openfoam modules"
 module load openfoam/7
-failfunction "$?" load fatal wallLiftBurns
+failfunction "$?" load fatal wallLiftgosman
 
 rm -r processor*
-failfunction "$?" rm pass wallLiftBurns
+failfunction "$?" rm pass wallLiftgosman
 
 decomposePar
-failfunction "$?" decomposePar fatal wallLiftBurns
+failfunction "$?" decomposePar fatal wallLiftgosman
 
-sbatch slurmgowallLiftgosman.sh
-failfunction "$?" sbatch fatal wallLiftBurns
+sbatch slurmwallLiftgosman.sh
+failfunction "$?" sbatch fatal wallLiftgosman
 
+#mpirun -np 80 twoPhaseEulerFoam -parallel
+#failfunction "$?" twoPhaseEulerFoam fatal gosman
