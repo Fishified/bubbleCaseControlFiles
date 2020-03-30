@@ -13,6 +13,9 @@ failfunction()
 }
 
 echo "Loading openfoam modules"
+module load nixpkgs/16.09
+module load gcc/7.3.0 
+module load openmpi/3.1.2
 module load openfoam/7
 failfunction "$?" load fatal contCl75
 
