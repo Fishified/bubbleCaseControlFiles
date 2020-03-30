@@ -25,6 +25,6 @@ failfunction "$?" rm pass contCl125
 decomposePar
 failfunction "$?" decomposePar fatal contCl125
 
-sbatch slurmgowallLift.sh
+sbatch slurmrunMs2192.sh
 failfunction "$?" sbatch fatal contCl125
 
