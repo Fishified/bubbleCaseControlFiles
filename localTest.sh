@@ -26,8 +26,8 @@ echo "Test started at $now:" >> testResult;
 rm -r processor*
 failfunction "$?" rm pass test
 
-decomposePar -dict ./localTest/decomposeParDict
+decomposePar
 failfunction "$?" decomposePar fatal test
 
-mpirun -np 8 twoPhaseEulerFoam -parallel
-failfunction "$?" twoPhaseEulerFoam fatal test
+mpirun -np $1 twoPhaseEulerFoam -parallel
+failfunction"$?" twoPhaseEulerFoam fatal test

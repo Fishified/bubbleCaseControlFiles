@@ -14,8 +14,8 @@ thermophysicalProperties.water, thermophysicalProperties.water
 turbulence.air, continuous.air
 turbulence.water, continuous.water
 g, g
-slurm, slurmrunMs2192.sh
+slurm, slurm.sh
 0, 0.base
 mesh, ../mesh/polyMeshFirstSubmission
-script, contCl1.sh
+script, slurmRun.sh
 localTest, localTest.sh

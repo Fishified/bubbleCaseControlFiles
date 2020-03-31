@@ -12,19 +12,24 @@ failfunction()
     fi
 }
 
-echo "Loading openfoam modules"
+echo "Setup to run the following commands for case $1:"
+echo "  rm -r processor*"
+echo "  decomposePar"
+echo "  sbatch"
+
+echo "Loading dependencies for OpenFOAM"
 module load nixpkgs/16.09
 module load gcc/7.3.0 
 module load openmpi/3.1.2
 module load openfoam/7
-failfunction "$?" load fatal contCl75
+failfunction "$?" load fatal $1
 
 rm -r processor*
-failfunction "$?" rm pass contCl75
+failfunction "$?" rm pass $1
 
 decomposePar
-failfunction "$?" decomposePar fatal contCl75
+failfunction "$?" decomposePar fatal $1
 
-sbatch slurmrunMs2192.sh
-failfunction "$?" sbatch fatal contCl75
+sbatch slurmRun.sh
+failfunction "$?" sbatch fatal $1
 

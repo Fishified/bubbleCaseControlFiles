@@ -4,5 +4,5 @@
 #SBATCH --ntasks-per-node=8
 #SBATCH --mem=0
 #SBATCH --time=0-28:00
-#SBATCH --output=wallLiftgosman.out
+#SBATCH --output=solverOutput.out
 mpirun -np 192 twoPhaseEulerFoam -parallel

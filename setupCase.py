@@ -8,9 +8,12 @@ cwd=os.getcwd()
 parser = argparse.ArgumentParser(description='A class instance of argparse!')
 parser.add_argument("-n", help="Case's name. Assumes the case folder will reside at the same directory level as caseControlFiles repo.")
 
+parser.add_argument("-np", help="Specify the number of processors to run the case with.")
+
 parser.add_argument("-test", help="yes/no whether you want the local testScripts to overwrite the server specific files (e.g. a decompose dict with only 8 cores for local testing compared to a decomposeDict with 80 cores for use on the server).")
 
 args = parser.parse_args()
+print(args)
 case = args.n
 
 refreshDict= './refreshDict/refreshDict.%s' %case
@@ -50,6 +53,43 @@ if 'mesh' in keyDict:
     if os.path.isdir(keyDict['mesh'].strip()):
         os.system('cp -r %s %s/constant/polyMesh' % (keyDict['mesh'].strip(),casePath))
 
+def writeDecomposeDict(np):
+
+    f= open("decomposeParDict","w+")
+
+    f.write("/*--------------------------------*- C++ -*----------------------------------*\\\n")
+    f.write("| =========                 |                                                 |\n")
+    f.write("| \\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |\n")
+    f.write("|  \\\    /   O peration     | Version:  2.1.0                                 |\n")
+    f.write("|   \\\  /    A nd           | Web:      www.OpenFOAM.org                      |\n")
+    f.write("|    \\\/     M anipulation  |                                                 |\n")
+    f.write("\*---------------------------------------------------------------------------*/\n")
+    f.write("FoamFile\n")
+    f.write("{\n")
+    f.write("    version     2.0;\n")
+    f.write("    format      ascii;\n")
+    f.write("    class       dictionary;\n")
+    f.write("    location    ""system"";\n")
+    f.write("    object      decomposeParDict;\n")
+    f.write("}\n")
+    f.write("// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //\n")
+    f.write("numberOfSubdomains      %s;\n" % np) 
+    f.write("method              scotch;\n")
+    f.close()
+
+def writeSlurmScript(n,cpn,t,s):
+
+    f= open("slurm.sh","w+")
+    f.write("#!/bin/bash\n")
+    f.write("#SBATCH --account=def-lacey\n")
+    f.write("#SBATCH --nodes=%s\n" %n)
+    f.write("#SBATCH --ntasks-per-node=%s\n" %cpn)
+    f.write("#SBATCH --mem=0\n")
+    f.write("#SBATCH --time=%s\n" %t)
+    f.write("#SBATCH --output=solverOutput.out\n")
+    f.write("mpirun -np %s %s -parallel" % (int(n)*int(cpn), s))
+    f.close()
+
 def addFileTrue(filename):
     print("Successfully added %s" % filename)
 
@@ -82,8 +122,9 @@ with open(refreshDict, 'r') as file:
             addFileTrue(value.strip())
 
         if 'decompose' in key:
-            file= './system/decomposeParDict/'+value.strip()
-            os.system('cp %s %s/system/decomposeParDict.orig' % (file,casePath) )
+            writeDecomposeDict(args.np)
+            file= './decomposeParDict'
+            os.system('cp %s %s/system/decomposeParDict' % (file,casePath) )
             addFileTrue(value.strip())
 
         if 'setFields' in key:
@@ -116,7 +157,6 @@ with open(refreshDict, 'r') as file:
             file = './system/surfaceFeatureExtractDict/'+value.strip()
             os.system('cp %s %s/system/surfaceFeatureExtractDict' % (file,casePath)) 
             addFileTrue(value.strip())
-
 
         """constant files"""
 
@@ -154,22 +194,24 @@ with open(refreshDict, 'r') as file:
         """script file"""
 
         if 'script' in key:
-            file = './scripts/'+value.strip()
+            file = './serverRun.sh'
             os.system('dos2unix %s' %file)
-            os.system('cp %s %s/%s' % (file,casePath,value.strip()))  
+            os.system('cp %s %s/%s' % (file,casePath,"serverRun.sh"))  
             addFileTrue(value.strip())             
         
         if 'localTest' in key:
-            testFolder = './localTest'
-            os.system('dos2unix %s/localTest.sh' % testFolder)
-            os.system('cp -r %s %s' % (testFolder,casePath))  
+            file = './localTest.sh'
+            os.system('dos2unix ./localTest.sh')
+            os.system('cp -r %s %s' % (file,casePath))  
             addFileTrue(value.strip())           
             
         """slurm file"""  
         
         if 'slurm' in key:
-            file = './slurm/'+value.strip()
-            os.system('cp %s %s/%s' % (file,casePath,value.strip()))
+            writeSlurmScript('24','8','0-28:00','twoPhaseEulerFoam')
+            os.system('dos2unix ./slurm.sh')
+            file = './slurm.sh'
+            os.system('cp %s %s/%s' % (file,casePath,file))
             addFileTrue(value.strip())
 
 if args.test and args.test == 'yes':
