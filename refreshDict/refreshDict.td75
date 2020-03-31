@@ -15,7 +15,7 @@ turbulence.air, continuous.air
 turbulence.water, continuous.water
 g, g
 slurm, slurm.sh
-0, 0.base
+0, 0.contCl75
 mesh, ../mesh/polyMeshFirstSubmission
 script, slurmRun.sh
 localTest, localTest.sh
